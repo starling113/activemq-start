@@ -23,12 +23,12 @@ public class QueueReceiverMapMessage {
 
         System.out.println("========================");
 
-        Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+        Session session = connection.createSession(false, Session.CLIENT_ACKNOWLEDGE);
         Queue firstQueue = session.createQueue("FirstQueue");
         MessageConsumer consumer = session.createConsumer(firstQueue);
         MapMessage receive = null;
         while ((receive = (MapMessage) consumer.receive(1000L)) != null) {
-            session.commit();
+            //session.commit();
 
             Enumeration mapNames = receive.getMapNames();
             while (mapNames.hasMoreElements()){
@@ -41,6 +41,8 @@ public class QueueReceiverMapMessage {
                 String key = (String) propertyNames.nextElement();
                 System.out.println(key +" = "+receive.getObjectProperty(key));
             }
+
+            receive.acknowledge();
 
             System.out.println("+++++++++++++++++++++++");
 
