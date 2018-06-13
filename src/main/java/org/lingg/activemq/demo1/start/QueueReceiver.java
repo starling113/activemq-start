@@ -1,13 +1,15 @@
-package org.lingg.activemq.demo1;
+package org.lingg.activemq.demo1.start;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.lingg.activemq.demo1.util.ActiveMQConst;
 
 import javax.jms.*;
 
 public class QueueReceiver {
 
+
     public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://127.0.0.1:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
 
         Connection connection = connectionFactory.createConnection();
 
@@ -16,10 +18,20 @@ public class QueueReceiver {
         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
         Queue firstQueue = session.createQueue("FirstQueue");
         MessageConsumer consumer = session.createConsumer(firstQueue);
+
+//        consumer.setMessageListener(new MessageListener() {
+//            @Override
+//            public void onMessage(Message message) {
+//                try {
+//                    System.out.println(((TextMessage)message).getText());
+//                } catch (JMSException e) {
+//                    e.printStackTrace();
+//                }
+//            }
+//        });
         TextMessage receive = null;
         while ((receive = (TextMessage) consumer.receive(1000L)) != null) {
             session.commit();
-//        System.out.println(ToStringBuilder.reflectionToString(receive.getText(), ToStringStyle.MULTI_LINE_STYLE));
             System.out.println(receive.getText());
         }
 

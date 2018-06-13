@@ -1,8 +1,9 @@
-package org.lingg.activemq.demo1;
+package org.lingg.activemq.demo1.start;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.lingg.activemq.demo1.util.ActiveMQConst;
 
 import java.util.Enumeration;
 import javax.jms.*;
@@ -10,7 +11,7 @@ import javax.jms.*;
 public class QueueReceiverMapMessage {
 
     public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://127.0.0.1:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
 
         Connection connection = connectionFactory.createConnection();
 

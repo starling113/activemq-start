@@ -1,20 +1,23 @@
-package org.lingg.activemq.demo1;
+package org.lingg.activemq.demo1.persistence;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.junit.Test;
+import org.lingg.activemq.demo1.util.ActiveMQConst;
 
 import javax.jms.*;
 
 public class PersistenceTest {
 
+    private static String topicName = "topic1";
+
     @Test
     public void testTopicSender() throws JMSException {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
         Connection connection = connectionFactory.createConnection();
 
 
         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-        Topic topic1 = session.createTopic("topic2");
+        Topic topic1 = session.createTopic(topicName);
         MessageProducer producer = session.createProducer(topic1);
 
         producer.setDeliveryMode(DeliveryMode.PERSISTENT); // 持久
@@ -40,13 +43,13 @@ public class PersistenceTest {
     }
 
     private void topicPersistenceReceiver(String clientID, String name) throws JMSException {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
 
         Connection connection = connectionFactory.createConnection();
         connection.setClientID(clientID);
 
         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-        Topic topic1 = session.createTopic("topic2");
+        Topic topic1 = session.createTopic(topicName);
         TopicSubscriber receiver = session.createDurableSubscriber(topic1, name);
         connection.start();
 

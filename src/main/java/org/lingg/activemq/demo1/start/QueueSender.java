@@ -1,12 +1,14 @@
-package org.lingg.activemq.demo1;
+package org.lingg.activemq.demo1.start;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
+import org.lingg.activemq.demo1.util.ActiveMQConst;
 
 import javax.jms.*;
 
 public class QueueSender {
+
     public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory("tcp://localhost:61616");
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
 
         Connection connection = connectionFactory.createConnection();
 
