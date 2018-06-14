@@ -30,7 +30,7 @@ public class QueueReceiver {
 //            }
 //        });
         TextMessage receive = null;
-        while ((receive = (TextMessage) consumer.receive(1000L)) != null) {
+        while ((receive = (TextMessage) consumer.receive(10000L)) != null) {
             session.commit();
             System.out.println(receive.getText());
         }

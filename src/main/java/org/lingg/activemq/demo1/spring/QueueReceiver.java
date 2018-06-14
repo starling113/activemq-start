@@ -18,7 +18,7 @@ public class QueueReceiver {
 
     public static void main(String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
-//        QueueReceiver ct = (QueueReceiver)ctx.getBean("QueueReceiver");
+//        QueueReceiver1 ct = (QueueReceiver1)ctx.getBean("QueueReceiver1");
         QueueReceiver ct = ctx.getBean(QueueReceiver.class);
 //
 //        Iterator<String> beanNamesIterator = ((ClassPathXmlApplicationContext) ctx).getBeanFactory().getBeanNamesIterator();
