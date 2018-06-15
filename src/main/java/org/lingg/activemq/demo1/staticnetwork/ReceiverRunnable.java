@@ -2,20 +2,21 @@ package org.lingg.activemq.demo1.staticnetwork;
 
 import org.apache.activemq.ActiveMQConnectionFactory;
 
+import java.util.concurrent.TimeUnit;
 import javax.jms.*;
 
 public class ReceiverRunnable implements Runnable {
-    private ConnectionFactory connectionFactory;
+    private String brokerUrl;
 
-    public ReceiverRunnable(ConnectionFactory connectionFactory){
-        this.connectionFactory = connectionFactory;
+    public ReceiverRunnable(String brokerUrl){
+        this.brokerUrl = brokerUrl;
     }
 
     @Override
     public void run() {
 
         try {
-
+            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
             Connection connection = connectionFactory.createConnection();
 
             connection.start();
@@ -24,17 +25,26 @@ public class ReceiverRunnable implements Runnable {
             Queue firstQueue = session.createQueue("FirstQueue");
             MessageConsumer consumer = session.createConsumer(firstQueue);
 
-            TextMessage receive = null;
-            while ((receive = (TextMessage) consumer.receive(10000L)) != null) {
-                session.commit();
-                System.out.println(receive.getText());
-            }
+            consumer.setMessageListener(new MessageListener() {
+                @Override
+                public void onMessage(Message message) {
+                    //System.out.println(message);
+                    try {
+                        TextMessage msg = (TextMessage) message;
+                        System.out.println(msg.getText());
+                        session.commit();
+                        session.close();
+                        connection.close();
 
-            session.close();
-            connection.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+
+
         }catch (Exception err){
             err.printStackTrace();
         }
-        //System.out.println(Thread.currentThread().getName());
     }
 }

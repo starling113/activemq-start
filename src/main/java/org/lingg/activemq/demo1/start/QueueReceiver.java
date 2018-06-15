@@ -9,7 +9,7 @@ public class QueueReceiver {
 
 
     public static void main(String[] args) throws Exception {
-        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
+        ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL2);
 
         Connection connection = connectionFactory.createConnection();
 

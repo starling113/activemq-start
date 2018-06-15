@@ -10,49 +10,11 @@ import java.util.concurrent.TimeUnit;
 public class QueueReceiver2 {
 
     public static void main(String[] args) throws InterruptedException {
-        String brokerUrl = ActiveMQConst.brokerURL2;
 
-
-        for (int i = 0; i < 3; i++) {
-            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-            new Thread(new ReceiverRunnable(connectionFactory)).start();
+        for (int i = 0; i < 30; i++) {
+            new Thread(new ReceiverRunnable(ActiveMQConst.brokerURL2)).start();
             TimeUnit.SECONDS.sleep(1);
         }
     }
 
-
-
-
-
-
-
-
-
-
-
-
-    @Test
-    public void testStaticNetwork1() {
-        String brokerUrl = ActiveMQConst.brokerURL;
-
-
-        for (int i = 0; i < 25; i++) {
-            ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerUrl);
-            new Thread(new ReceiverRunnable(connectionFactory)).start();
-        }
-    }
-
-
-    @Test
-    public void test3() {
-        Thread t=new Thread(new Runnable() {
-            @Override
-            public void run() {
-                System.out.println("runnable");
-            }
-        });
-
-        t.start();
-
-    }
 }

@@ -18,7 +18,8 @@ public class QueueSender {
         Queue firstQueue = session.createQueue("FirstQueue");
 
         MessageProducer producer = session.createProducer(firstQueue);
-        for (int i = 0; i < 300; i++) {
+        producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
+        for (int i = 0; i < 30; i++) {
             TextMessage message = session.createTextMessage("hello" + i);
             producer.send(message);
         }
