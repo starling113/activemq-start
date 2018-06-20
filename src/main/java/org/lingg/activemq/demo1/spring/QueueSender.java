@@ -17,7 +17,7 @@ public class QueueSender {
     public static void main(String[] args) {
         ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-        QueueSender ct = (QueueSender) ctx.getBean("QueueSender");
+        QueueSender ct = (QueueSender) ctx.getBean("Sender1");
 
         ct.jmsTemplate.send(session -> {
             TextMessage msg = session.createTextMessage("spring msg ^^^^^");
