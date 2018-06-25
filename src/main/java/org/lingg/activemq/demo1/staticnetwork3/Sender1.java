@@ -10,12 +10,16 @@ public class Sender1 {
     public static void main(String[] args) throws Exception {
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
 
+       // ((ActiveMQConnectionFactory) connectionFactory).setAlwaysSyncSend();
+
         Connection connection = connectionFactory.createConnection();
 
         connection.start();
 
         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
         Destination topics = session.createTopic("VirtualTopic.Orders");
+
+
 
         MessageProducer producer = session.createProducer(topics);
         producer.setDeliveryMode(DeliveryMode.NON_PERSISTENT);
