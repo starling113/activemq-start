@@ -9,6 +9,9 @@ public class Sender2 {
 
     public static void main(String[] args) throws Exception{
         ConnectionFactory connectionFactory = new ActiveMQConnectionFactory(ActiveMQConst.brokerURL);
+
+        ((ActiveMQConnectionFactory) connectionFactory).setProducerWindowSize(1024000); // 生产者流量控制（Producer Flow Control）
+
         Connection connection = connectionFactory.createConnection();
         connection.start();
 

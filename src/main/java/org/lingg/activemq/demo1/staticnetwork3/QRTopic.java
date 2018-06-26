@@ -15,7 +15,9 @@ public class QRTopic {
         connection.start();
 
         Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-        Destination firstQueue = session.createTopic("VirtualTopic.Mirror.MyQueue");
+//        Destination firstQueue = session.createTopic("VirtualTopic.Mirror.MyQueue");
+//        Destination firstQueue = session.createTopic("students");
+        Destination firstQueue = session.createQueue("students");
 
         for (int i = 0; i < 1 ; i++){
             MessageConsumer consumer = session.createConsumer(firstQueue);
