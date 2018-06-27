@@ -22,7 +22,7 @@ public class Sender2 {
             MessageProducer producer = session.createProducer(topic1);
 
             for (int i = 0; i < 3; i++) {
-                TextMessage textMessage = session.createTextMessage(j+" hello__2__ " + i);
+                TextMessage textMessage = session.createTextMessage(j+" hello__ " + i);
                 producer.send(textMessage);
             }
 
